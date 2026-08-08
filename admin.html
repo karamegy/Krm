@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم والإدارة</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stats-box { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #f39c12; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>لوحة تحكم الأدغال</h1>
+        <p>إدارة أعضاء النظام والتحكم في إعدادات المنصة</p>
+        
+        <div class="stats-box">
+            <h3>إحصائيات النظام:</h3>
+            <p>إجمالي المستكشفين المسجلين: <span id="user-count" style="color: var(--mystery-gold); font-weight: bold;">0</span></p>
+        </div>
+
+        <button class="menu-btn full-width" onclick="clearAllData()" style="background: #c0392b; margin-bottom: 10px;">حذف كافة بيانات الأعضاء</button>
+        <button class="menu-btn full-width" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let users = JSON.parse(localStorage.getItem('all_users') || '[]');
+            document.getElementById('user-count').innerText = users.length;
+        }
+
+        function clearAllData() {
+            if(confirm('هل أنت متأكد من رغبتك في مسح كافة بيانات المستكشفين؟')) {
+                let users = JSON.parse(localStorage.getItem('all_users') || '[]');
+                users.forEach(u => localStorage.removeItem('user_' + u));
+                localStorage.removeItem('all_users');
+                localStorage.removeItem('activeUser');
+                alert('تمت تهيئة النظام وتفريغ البيانات.');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
